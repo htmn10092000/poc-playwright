@@ -10,7 +10,7 @@ test('has title', async ({ page }) => {
   await expect(page).toHaveTitle(/DEMOQA/);
 });
 
-test.only('login to the system successfully', async ({ page }) => {
+test('login to the system successfully', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const bookStorePage = new BookStorePage(page);
   await page.goto('/login');
