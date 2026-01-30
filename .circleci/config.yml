@@ -1,33 +1,30 @@
 version: 2.1
 
 jobs:
-  playwright-tests:
+  playwright-e2e-tests:
     docker:
       - image: cimg/node:lts
     working_directory: ~/project
-    timeout: 60m
-
     steps:
       - checkout
-
       - run:
           name: Install dependencies
           command: npm ci
-
       - run:
           name: Install Playwright Browsers
           command: npx playwright install --with-deps
-
       - run:
-          name: Run Playwright tests
-          command: npx playwright test
-
-      - store_artifacts:
-          path: playwright-report
-          destination: playwright-report
+          name: Run Playwright end-to-end tests
+          command: |
+            mkdir test-results
+            pnpm run serve &
+            TESTFILES=$(circleci tests glob "specs/e2e/**/*.spec.ts")
+            echo "$TESTFILES" | circleci tests run --command="xargs pnpm playwright test --config=playwright.config.ci.ts --reporter=junit" --verbose --split-by=timings
+      - store_test_results:
+          path: test-results
 
 workflows:
   version: 2
-  playwright-workflow:
+  e2e-workflow:
     jobs:
-      - playwright-tests
+      - playwright-e2e-tests
