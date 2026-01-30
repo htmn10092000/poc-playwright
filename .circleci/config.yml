@@ -1,0 +1,33 @@
+version: 2.1
+
+jobs:
+  playwright-tests:
+    docker:
+      - image: cimg/node:lts
+    working_directory: ~/project
+    timeout: 60m
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install dependencies
+          command: npm ci
+
+      - run:
+          name: Install Playwright Browsers
+          command: npx playwright install --with-deps
+
+      - run:
+          name: Run Playwright tests
+          command: npx playwright test
+
+      - store_artifacts:
+          path: playwright-report
+          destination: playwright-report
+
+workflows:
+  version: 2
+  playwright-workflow:
+    jobs:
+      - playwright-tests
