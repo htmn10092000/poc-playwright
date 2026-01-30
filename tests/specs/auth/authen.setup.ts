@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
-import { users } from '../../test-data/users';
+import { users } from '../../../test-data/users';
 
 test('authenticate user', async ({ page }) => {
     const loginPage = new LoginPage(page);

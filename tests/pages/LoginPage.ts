@@ -15,9 +15,9 @@ export class LoginPage extends BasePage {
     this.userAccount = page.locator('#userName-value');
   }
 
-  async login(user: string, pass: string) {
+  async login(user: string, pw: string) {
     await this.fill(this.username, user);
-    await this.fill(this.password, pass);
+    await this.fill(this.password, pw);
     await this.click(this.loginButton);
   }
 }

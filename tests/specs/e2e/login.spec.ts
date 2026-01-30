@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
-import { users } from '../../test-data/users';
+import { users } from '../../../test-data/users';
 import { BookStorePage } from '../../pages/BookStorePage';
 
 test('has title', async ({ page }) => {
