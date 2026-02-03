@@ -5,7 +5,6 @@ jobs:
     docker:
       - image: cimg/node:lts
     working_directory: ~/project
-    timeout: 60m
 
     steps:
       - checkout
@@ -13,14 +12,17 @@ jobs:
       - run:
           name: Install dependencies
           command: npm ci
+          no_output_timeout: 20m
 
       - run:
           name: Install Playwright Browsers
           command: npx playwright install --with-deps
+          no_output_timeout: 20m
 
       - run:
           name: Run Playwright tests
           command: npx playwright test
+          no_output_timeout: 60m
 
       - store_artifacts:
           path: playwright-report
